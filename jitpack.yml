@@ -1,0 +1,5 @@
+before_install:
+  - sdk update
+  - sdk install maven
+  - sdk install java 11.0.0-open
+  - sdk use java 11.0.0-open
