@@ -75,7 +75,7 @@ libraryDependencies += "com.github.Valkryst" % "VLineIn" % "2024.10.21"
 
 ## Examples
 
-### Save Data to Disk
+### Save Audio Data to Disk
 
 ```java
 public class Driver {
@@ -98,7 +98,7 @@ public class Driver {
             firstSource.getKey() // todo You can pull the source name from the output list and use it here.
         );
 
-        // Output the audio data, as it's received, to the console.
+        // Output the audio data to a file.
         lineIn.startRecording(
             AudioFileFormat.Type.WAVE,
             Path.of("output.wav")
