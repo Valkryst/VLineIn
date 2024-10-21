@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/Valkryst/VLineIn/actions/workflows/maven.yml/badge.svg)](https://github.com/Valkryst/VLineIn/actions/workflows/maven.yml)
+
 `VLineIn` is a Java library which simplifies reading from line-in audio devices. It can be used to read and save audio
 directly to disk, or to receive raw `byte[]` data for real-time processing.
 
