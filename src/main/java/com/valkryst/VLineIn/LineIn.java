@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class LineIn implements AutoCloseable {
     /** Logger for this class. */
-    private final Logger logger = LogManager.getLogger(LineIn.class, new ReusableMessageFactory());
+    private static final Logger logger = LogManager.getLogger(LineIn.class, new ReusableMessageFactory());
 
     /** {@link AudioFormat} to record audio in. */
     private final AudioFormat audioFormat;
@@ -80,7 +80,7 @@ public class LineIn implements AutoCloseable {
                 logger.error("Failed to start recording.", e);
                 thread.interrupt();
             }
-        });
+        }, "LineIn-Recording-Thread");
         thread.start();
     }
 
