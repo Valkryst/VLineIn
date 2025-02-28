@@ -12,11 +12,15 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class LineIn implements AutoCloseable {
     /** Logger for this class. */
     private static final Logger logger = LogManager.getLogger(LineIn.class, new ReusableMessageFactory());
+
+    /** Counter for naming threads. */
+    private static final AtomicInteger threadCounter = new AtomicInteger(0);
 
     /** {@link AudioFormat} to record audio in. */
     private final AudioFormat audioFormat;
@@ -80,7 +84,7 @@ public class LineIn implements AutoCloseable {
                 logger.error("Failed to start recording.", e);
                 thread.interrupt();
             }
-        }, "LineIn-Recording-Thread");
+        }, "LineIn-PathRecordingThread-" + threadCounter.getAndIncrement());
         thread.start();
     }
 
@@ -111,7 +115,7 @@ public class LineIn implements AutoCloseable {
                 logger.error("Failed to start recording.", e);
                 thread.interrupt();
             }
-        });
+        }, "LineIn-ConsumerRecordingThread-" + threadCounter.getAndIncrement());
         thread.start();
     }
 
