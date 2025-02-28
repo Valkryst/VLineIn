@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class LineIn {
+public class LineIn implements AutoCloseable {
     /** Logger for this class. */
     private final Logger logger = LogManager.getLogger(LineIn.class, new ReusableMessageFactory());
 
@@ -41,6 +41,20 @@ public class LineIn {
     public LineIn(final @NonNull AudioFormat audioFormat, final @NonNull String inputName) throws IllegalArgumentException, IllegalStateException, LineUnavailableException, SecurityException {
         this.audioFormat = audioFormat;
         this.targetDataLine = getLineIn(inputName);
+    }
+
+    @Override
+    public void close() throws Exception {
+        try {
+            stopRecording();
+        } catch (final InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Failed to stop recording during close.", e);
+        } finally {
+            if (targetDataLine.isOpen()) {
+                targetDataLine.close();
+            }
+        }
     }
 
     /**
