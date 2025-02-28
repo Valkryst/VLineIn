@@ -165,6 +165,30 @@ public class LineIn implements AutoCloseable {
     }
 
     /**
+     * <p>
+     *     Retrieves the {@link Mixer.Info#getName()} and {@link TargetDataLine.Info} for all available audio inputs
+     *     that support the specified {@link AudioFormat}.
+     * </p>
+     *
+     * <p>The set of available inputs is determined by the underlying system, and may change between runs.</p>
+     *
+     * @param format {@link AudioFormat} to check support for.
+     *
+     * @return An immutable mapping of {@link Mixer.Info#getName()} to {@link TargetDataLine.Info}.
+     */
+    public static Map<String, TargetDataLine.Info> getInputSources(final @NonNull AudioFormat format) {
+        final var compatibleSources = new HashMap<String, TargetDataLine.Info>();
+
+        for (final var entry : LineIn.getInputSources().entrySet()) {
+            try (final var ignored = new LineIn(format, entry.getKey())) {
+                compatibleSources.put(entry.getKey(), entry.getValue());
+            } catch (final Exception ignored) {}
+        }
+
+        return Map.copyOf(compatibleSources);
+    }
+
+    /**
      * <p>Attempts to obtain a {@link TargetDataLine} for the specified input.</p>
      *
      * @param inputName Name of the input to obtain a {@link TargetDataLine} for.
