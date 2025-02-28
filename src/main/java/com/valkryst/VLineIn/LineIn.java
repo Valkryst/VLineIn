@@ -144,7 +144,7 @@ public class LineIn implements AutoCloseable {
      *
      * <p>The set of available inputs is determined by the underlying system, and may change between runs.</p>
      *
-     * @return A mapping of {@link Mixer.Info#getName()} to {@link TargetDataLine.Info}.
+     * @return An immutable mapping of {@link Mixer.Info#getName()} to {@link TargetDataLine.Info}.
      */
     public static Map<String, TargetDataLine.Info> getInputSources() {
         final var sources = new HashMap<String, TargetDataLine.Info>();
@@ -158,7 +158,7 @@ public class LineIn implements AutoCloseable {
             }
         }
 
-        return sources;
+        return Map.copyOf(sources);
     }
 
     /**
