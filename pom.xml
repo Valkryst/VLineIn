@@ -6,7 +6,7 @@
 
     <groupId>com.github.Valkryst</groupId>
     <artifactId>VLineIn</artifactId>
-    <version>2024.10.21-fix-fix</version>
+    <version>2025.02.27</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
 
