@@ -1,9 +1,7 @@
 package com.valkryst.VLineIn;
 
 import lombok.NonNull;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ReusableMessageFactory;
+import lombok.extern.log4j.Log4j2;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -16,10 +14,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
+@Log4j2
 public class LineIn implements AutoCloseable {
-    /** Logger for this class. */
-    private static final Logger logger = LogManager.getLogger(LineIn.class, new ReusableMessageFactory());
-
     /** Counter for naming threads. */
     private static final AtomicInteger threadCounter = new AtomicInteger(0);
 
@@ -54,7 +50,7 @@ public class LineIn implements AutoCloseable {
             stopRecording();
         } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Failed to stop recording during close.", e);
+            log.error("Failed to stop recording during close.", e);
         } finally {
             if (targetDataLine.isOpen()) {
                 targetDataLine.close();
@@ -84,7 +80,7 @@ public class LineIn implements AutoCloseable {
 
                 AudioSystem.write(new AudioInputStream(targetDataLine), fileFormat, outputPath.toFile());
             } catch (final LineUnavailableException | SecurityException | IllegalArgumentException | IOException e) {
-                logger.error("Failed to start recording.", e);
+                log.error("Failed to start recording.", e);
                 thread.interrupt();
             }
         }, "LineIn-PathRecordingThread-" + threadCounter.getAndIncrement());
@@ -115,7 +111,7 @@ public class LineIn implements AutoCloseable {
                     consumer.accept(buffer.clone());
                 }
             } catch (final LineUnavailableException e) {
-                logger.error("Failed to start recording.", e);
+                log.error("Failed to start recording.", e);
                 thread.interrupt();
             }
         }, "LineIn-ConsumerRecordingThread-" + threadCounter.getAndIncrement());
