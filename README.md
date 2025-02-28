@@ -36,7 +36,7 @@ Add VLineIn as a dependency.
 
 ```
 dependencies {
-	implementation 'com.github.Valkryst:VLineIn:2025.02.27'
+	implementation 'com.github.Valkryst:VLineIn:2025.02.28'
 }
 ```
 
@@ -58,7 +58,7 @@ Add VLineIn as a dependency.
 <dependency>
     <groupId>com.github.Valkryst</groupId>
     <artifactId>VLineIn</artifactId>
-    <version>2025.02.27</version>
+    <version>2025.02.28</version>
 </dependency>
 ```
 
@@ -73,7 +73,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 Add VLineIn as a dependency.
 
 ```
-libraryDependencies += "com.github.Valkryst" % "VLineIn" % "2025.02.27"
+libraryDependencies += "com.github.Valkryst" % "VLineIn" % "2025.02.28"
 ```
 
 ## Examples
