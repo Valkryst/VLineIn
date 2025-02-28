@@ -172,7 +172,7 @@ public class LineIn implements AutoCloseable {
      * @throws LineUnavailableException If a matching line is not available due to resource restrictions.
      * @throws SecurityException If the requested line cannot be opened due to security restrictions.
      */
-    private TargetDataLine getLineIn(final String inputName) throws IllegalArgumentException, IllegalStateException, LineUnavailableException, SecurityException {
+    private TargetDataLine getLineIn(final @NonNull String inputName) throws IllegalArgumentException, IllegalStateException, LineUnavailableException, SecurityException {
         final var dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
         if (!AudioSystem.isLineSupported(dataLineInfo)) {
             throw new IllegalStateException(inputName + " does not support the following audio format: " + audioFormat);
