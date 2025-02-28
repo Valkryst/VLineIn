@@ -12,6 +12,7 @@ directly to disk, or to receive raw `byte[]` data for real-time processing.
 * [Examples](#examples)
   * [Save Data to Disk](#save-data-to-disk) 
   * [Output Audio Data to Console](#output-audio-data-to-console)
+  * [Display Input Sources in a Swing ComboBox](#display-input-sources-in-a-swing-combobox)
 
 ## Installation
 
@@ -143,5 +144,33 @@ public class Driver {
         Thread.sleep(4000);
         lineIn.stopRecording();
     }
+}
+```
+
+### Display Input Sources in a Swing ComboBox
+
+```java
+public class Driver {
+  public static void main(final String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      final JFrame frame = new JFrame("LineInComboBox Example");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setLayout(new GridLayout(2, 2, 10, 10));
+
+      // Display a LineInComboBox with all available input sources:
+      frame.add(new JLabel("Default Format:"));
+      frame.add(new LineInComboBox());
+
+      // Display a LineInComboBox with all available input sources, which support the custom audio format:
+      frame.add(new JLabel("Custom Format (16kHz, 16-bit, mono):"));
+      frame.add(new LineInComboBox(
+              new AudioFormat(16000, 16, 1, true, true)
+      ));
+
+      frame.pack();
+      frame.setLocationRelativeTo(null);
+      frame.setVisible(true);
+    });
+  }
 }
 ```
