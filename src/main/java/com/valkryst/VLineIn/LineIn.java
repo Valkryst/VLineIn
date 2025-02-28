@@ -7,6 +7,7 @@ import org.apache.logging.log4j.message.ReusableMessageFactory;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -78,6 +79,8 @@ public class LineIn implements AutoCloseable {
             try {
                 targetDataLine.open(audioFormat);
                 targetDataLine.start();
+
+                Files.createDirectories(outputPath.getParent());
 
                 AudioSystem.write(new AudioInputStream(targetDataLine), fileFormat, outputPath.toFile());
             } catch (final LineUnavailableException | SecurityException | IllegalArgumentException | IOException e) {
