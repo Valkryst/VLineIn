@@ -1,7 +1,7 @@
 package com.valkryst.VLineIn;
 
 import lombok.NonNull;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.XSlf4j;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-@Log4j2
+@XSlf4j
 public class LineIn implements AutoCloseable {
     /** Counter for naming threads. */
     private static final AtomicInteger threadCounter = new AtomicInteger(0);
@@ -50,7 +50,7 @@ public class LineIn implements AutoCloseable {
             stopRecording();
         } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.error("Failed to stop recording during close.", e);
+            log.atError().setCause(e).log("Encountered an error while stopping recording.");
         } finally {
             if (targetDataLine.isOpen()) {
                 targetDataLine.close();
@@ -80,7 +80,7 @@ public class LineIn implements AutoCloseable {
 
                 AudioSystem.write(new AudioInputStream(targetDataLine), fileFormat, outputPath.toFile());
             } catch (final LineUnavailableException | SecurityException | IllegalArgumentException | IOException e) {
-                log.error("Failed to start recording.", e);
+                log.atError().setCause(e).log("Encountered an error while starting recording.");
                 thread.interrupt();
             }
         }, "LineIn-PathRecordingThread-" + threadCounter.getAndIncrement());
@@ -111,7 +111,7 @@ public class LineIn implements AutoCloseable {
                     consumer.accept(buffer.clone());
                 }
             } catch (final LineUnavailableException e) {
-                log.error("Failed to start recording.", e);
+                log.atError().setCause(e).log("Encountered an error while starting recording.");
                 thread.interrupt();
             }
         }, "LineIn-ConsumerRecordingThread-" + threadCounter.getAndIncrement());

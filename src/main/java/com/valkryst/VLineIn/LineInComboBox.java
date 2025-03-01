@@ -2,7 +2,7 @@ package com.valkryst.VLineIn;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.XSlf4j;
 
 import javax.sound.sampled.AudioFormat;
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Log4j2
+@XSlf4j
 public class LineInComboBox extends JComboBox<String> {
     /** {@link AudioFormat} to filter input sources by, or {@code null} if all input sources should be displayed. */
     private AudioFormat audioFormat;
@@ -97,7 +97,7 @@ public class LineInComboBox extends JComboBox<String> {
                     removeAllItems();
                     this.get().forEach(LineInComboBox.this::addItem);
                 } catch (final Exception e) {
-                    log.error("Encountered an error while refreshing input sources.", e);
+                    log.atError().setCause(e).log("Encountered an error while refreshing input sources.");
                 } finally {
                     // Attempt to re-select the previously selected item, if it still exists.
                     if (currentSelection != null && currentSelection.isBlank()) {
