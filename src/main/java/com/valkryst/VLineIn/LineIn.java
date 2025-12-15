@@ -81,7 +81,7 @@ public class LineIn implements AutoCloseable {
                 targetDataLine.open(audioFormat);
                 targetDataLine.start();
 
-                Files.createDirectories(outputPath.getParent());
+                Files.createDirectories(outputPath.toAbsolutePath().getParent());
 
                 AudioSystem.write(new AudioInputStream(targetDataLine), fileFormat, outputPath.toFile());
             } catch (final LineUnavailableException | SecurityException | IllegalArgumentException | IOException e) {
