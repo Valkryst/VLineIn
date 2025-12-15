@@ -97,14 +97,14 @@ public class Driver {
         // Create a new LineIn instance to record audio from the first input source.
         final var firstSource = inputSources.entrySet().stream().findFirst().orElseThrow();
         final var lineIn = new LineIn(
-            new AudioFormat(16000, 16, 1, true, true),
-            firstSource.getKey() // todo You can pull the source name from the output list and use it here.
+                new AudioFormat(16000, 16, 1, true, true),
+                firstSource.getKey() // todo You can pull the source name from the output list and use it here.
         );
 
         // Output the audio data to a file.
         lineIn.startRecording(
-            AudioFileFormat.Type.WAVE,
-            Path.of("output.wav")
+                AudioFileFormat.Type.WAVE,
+                Path.of("output.wav")
         );
 
         // Record audio for 4 seconds, then stop.
@@ -152,25 +152,25 @@ public class Driver {
 ```java
 public class Driver {
     static void main(final String[] args) {
-    SwingUtilities.invokeLater(() -> {
-      final JFrame frame = new JFrame("LineInComboBox Example");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setLayout(new GridLayout(2, 2, 10, 10));
+        SwingUtilities.invokeLater(() -> {
+            final JFrame frame = new JFrame("LineInComboBox Example");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLayout(new GridLayout(2, 2, 10, 10));
 
-      // Display a LineInComboBox with all available input sources:
-      frame.add(new JLabel("Default Format:"));
-      frame.add(new LineInComboBox());
+            // Display a LineInComboBox with all available input sources:
+            frame.add(new JLabel("Default Format:"));
+            frame.add(new LineInComboBox());
 
-      // Display a LineInComboBox with all available input sources, which support the custom audio format:
-      frame.add(new JLabel("Custom Format (16kHz, 16-bit, mono):"));
-      frame.add(new LineInComboBox(
-              new AudioFormat(16000, 16, 1, true, true)
-      ));
+            // Display a LineInComboBox with all available input sources, which support the custom audio format:
+            frame.add(new JLabel("Custom Format (16kHz, 16-bit, mono):"));
+            frame.add(new LineInComboBox(
+                    new AudioFormat(16000, 16, 1, true, true)
+            ));
 
-      frame.pack();
-      frame.setLocationRelativeTo(null);
-      frame.setVisible(true);
-    });
-  }
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
 }
 ```
