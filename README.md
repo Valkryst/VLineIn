@@ -10,8 +10,8 @@ directly to disk, or to receive raw `byte[]` data for real-time processing.
     * [Maven](#-maven)
     * [sbt](#-scala-sbt)
 * [Examples](#examples)
-  * [Save Data to Disk](#save-data-to-disk) 
-  * [Output Audio Data to Console](#output-audio-data-to-console)
+    * [Save Data to Disk](#save-audio-data-to-disk)
+    * [Output Audio Data to Console](#output-audio-data-to-console)
   * [Display Input Sources in a Swing ComboBox](#display-input-sources-in-a-swing-combobox)
 
 ## Installation
@@ -36,7 +36,7 @@ Add VLineIn as a dependency.
 
 ```
 dependencies {
-	implementation 'com.github.Valkryst:VLineIn:2025.03.01'
+	implementation 'com.github.Valkryst:VLineIn:2.0.0'
 }
 ```
 
@@ -58,7 +58,7 @@ Add VLineIn as a dependency.
 <dependency>
     <groupId>com.github.Valkryst</groupId>
     <artifactId>VLineIn</artifactId>
-  <version>2025.03.01</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -73,7 +73,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 Add VLineIn as a dependency.
 
 ```
-libraryDependencies += "com.github.Valkryst" % "VLineIn" % "2025.03.01"
+libraryDependencies += "com.github.Valkryst" % "VLineIn" % "2.0.0"
 ```
 
 ## Examples
@@ -82,7 +82,7 @@ libraryDependencies += "com.github.Valkryst" % "VLineIn" % "2025.03.01"
 
 ```java
 public class Driver {
-    public static void main(final String[] args) throws LineUnavailableException, InterruptedException {
+    static void main(final String[] args) throws LineUnavailableException, InterruptedException {
         final var inputSources = LineIn.getInputSources();
 
         // Print the available input sources and their supported formats.
@@ -118,7 +118,7 @@ public class Driver {
 
 ```java
 public class Driver {
-    public static void main(final String[] args) throws LineUnavailableException, InterruptedException {
+    static void main(final String[] args) throws LineUnavailableException, InterruptedException {
         final var inputSources = LineIn.getInputSources();
 
         // Print the available input sources and their supported formats.
@@ -151,7 +151,7 @@ public class Driver {
 
 ```java
 public class Driver {
-  public static void main(final String[] args) {
+    static void main(final String[] args) {
     SwingUtilities.invokeLater(() -> {
       final JFrame frame = new JFrame("LineInComboBox Example");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
