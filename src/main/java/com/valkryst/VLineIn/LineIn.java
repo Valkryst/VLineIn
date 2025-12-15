@@ -16,6 +16,11 @@ import java.util.function.Consumer;
 
 @XSlf4j
 public class LineIn implements AutoCloseable {
+    /**
+     * Unique separator to use between mixer name and description in input source keys.
+     */
+    private static final String KEY_SEPARATOR = "\u2003";
+
     /** Counter for naming threads. */
     private static final AtomicInteger threadCounter = new AtomicInteger(0);
 
@@ -151,7 +156,7 @@ public class LineIn implements AutoCloseable {
         for (final var mixerInfo : AudioSystem.getMixerInfo()) {
             for (final var lineInfo : AudioSystem.getMixer(mixerInfo).getTargetLineInfo()) {
                 if (lineInfo.getLineClass().equals(TargetDataLine.class)) {
-                    sources.put(mixerInfo.getName(), (TargetDataLine.Info) lineInfo);
+                    sources.put(mixerInfo.getName() + KEY_SEPARATOR + mixerInfo.getDescription(), (TargetDataLine.Info) lineInfo);
                     break;
                 }
             }
@@ -203,7 +208,7 @@ public class LineIn implements AutoCloseable {
 
         Mixer mixer = null;
         for (final var mixerInfo : AudioSystem.getMixerInfo()) {
-            if (mixerInfo.getName().equals(inputName)) {
+            if (mixerInfo.getName().equals(inputName.split(KEY_SEPARATOR)[0])) {
                 mixer = AudioSystem.getMixer(mixerInfo);
                 break;
             }
