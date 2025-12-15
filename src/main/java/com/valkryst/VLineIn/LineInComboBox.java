@@ -100,8 +100,12 @@ public class LineInComboBox extends JComboBox<String> {
                     log.atError().setCause(e).log("Encountered an error while refreshing input sources.");
                 } finally {
                     // Attempt to re-select the previously selected item, if it still exists.
-                    if (currentSelection != null && currentSelection.isBlank()) {
-                        setSelectedIndex(-1);
+                    if (currentSelection == null || currentSelection.isBlank()) {
+                        if (getItemCount() > 0) {
+                            setSelectedIndex(1);
+                        } else {
+                            setSelectedIndex(-1);
+                        }
                     } else {
                         setSelectedItem(currentSelection);
                     }
